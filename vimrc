@@ -44,6 +44,7 @@ set nofixendofline
 
 " For use with :set list
 set listchars=eol:$,tab:>-
+nnoremap <Leader>. :set list!<CR>
 
 " Auto-select regexp engine for syntax highlighting
 " Fixes long hangs for TypeScript files
@@ -53,9 +54,13 @@ set regexpengine=0
 " %-0{minwid}.{maxwid}{item}
 set statusline=%<%f\ %h%w%q%m%r%=%-15.([%l:%c/%L][%p%%]%)%y
 
+" Buffer navigation
+nnoremap <Leader>] :bnext<CR>
+nnoremap <Leader>[ :bprevious<CR>
+
 " fzf
-if isdirectory('/usr/local/opt/fzf')
-  set runtimepath+=/usr/local/opt/fzf
+if executable('fzf')
+  set runtimepath+=/Users/swazzan/.nix-profile/share/vim-plugins/fzf/
   nnoremap <Leader>f :FZF!<CR>
 
   command! -bang FZFB
@@ -68,7 +73,23 @@ if isdirectory('/usr/local/opt/fzf')
   nnoremap <Leader>b :FZFB!<CR>
 endif
 
+" ALE
+" These need to be defined before loading plugins
+let g:ale_completion_enabled=1
+set omnifunc=ale#completion#OmniFunc
+
+" Plugin loading
+packloadall
+silent! helptags ALL
+
 " Source local project settings if available
 if filereadable('./saeid/project.vim')
   source ./saeid/project.vim
+endif
+
+if exists(":ALEInfo")
+  nnoremap <Leader>ag :ALEGoToDefinition<CR>
+  nnoremap <Leader>ar :ALEFindReferences -quickfix<CR>
+  nnoremap <Leader>af :ALEFirst<CR>
+  nnoremap <Leader>an :ALENext<CR>
 endif
