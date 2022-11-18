@@ -53,6 +53,7 @@ set regexpengine=0
 " Status line
 " %-0{minwid}.{maxwid}{item}
 set statusline=%<%f\ %h%w%q%m%r%=%-15.([%l:%c/%L][%p%%]%)%y
+set showcmd " Show typed keys in status line
 
 " Buffer navigation
 nnoremap <Leader>] :bnext<CR>
@@ -66,7 +67,7 @@ if executable('fzf')
   command! -bang FZFB
     \ call fzf#run(
       \ fzf#wrap({
-        \ 'source': map(getbufinfo({'buflisted': 1}), {_, buf -> buf.name }),
+        \ 'source': map(getbufinfo({'buflisted': 1}), {_, buf -> buf.name != "" ? buf.name : buf.bufnr }),
         \ 'sink': 'b'
       \ }, <bang>0)
     \ )
@@ -82,14 +83,36 @@ set omnifunc=ale#completion#OmniFunc
 packloadall
 silent! helptags ALL
 
-" Source local project settings if available
-if filereadable('./saeid/project.vim')
-  source ./saeid/project.vim
-endif
-
 if exists(":ALEInfo")
   nnoremap <Leader>ag :ALEGoToDefinition<CR>
   nnoremap <Leader>ar :ALEFindReferences -quickfix<CR>
   nnoremap <Leader>af :ALEFirst<CR>
   nnoremap <Leader>an :ALENext<CR>
+
+  call ale#linter#Define('cf', {
+  \   'name': 'ColdFusion CFM',
+  \   'lsp': 'socket',
+  \   'address': 'localhost:5003',
+  \   'project_root': getcwd(),
+  \})
+endif
+
+" Make a new scratch buffer
+function! MakeScratch()
+  let ft = input("File type: ", "sql")
+  try
+    enew
+    setlocal buftype=nofile
+    setlocal bufhidden=hide
+    setlocal noswapfile
+
+    let &l:filetype = ft
+  endtry
+endfunction
+
+nnoremap <Leader>sc :call MakeScratch()<CR>
+
+" Source local project settings if available
+if filereadable('./saeid/project.vim')
+  source ./saeid/project.vim
 endif
