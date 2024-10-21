@@ -115,12 +115,28 @@ call plug#begin()
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'github/copilot.vim'
+Plug 'puremourning/vimspector'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+set termguicolors
+
+Plug 'OmniSharp/omnisharp-vim'
 
 call plug#end()
 
+packadd! editorconfig
+
+colorscheme catppuccin_mocha
+
+" let g:deoplete#enable_at_startup = 1
+
 " Vimspector setup
 " let g:vimspector_enable_mappings = 'HUMAN'
-let g:vimspector_base_dir='~/.vim/pack/vimspector/opt/vimspector'
+" let g:vimspector_base_dir='~/.vim/pack/vimspector/opt/vimspector'
 nnoremap <Leader>dl :call vimspector#Launch()<CR>
 nnoremap <Leader>dr :call vimspector#Reset()<CR>
 nnoremap <Leader>dc :call vimspector#Continue()<CR>
@@ -145,10 +161,17 @@ endfunction
 
 nnoremap <Leader>sc :call MakeScratch()<CR>
 
-" Source local project settings if available
-if filereadable('./saeid/project.vim')
-  source ./saeid/project.vim
-endif
+let g:OmniSharp_server_path = 'OmniSharp'
+
+function! s:CBCodeFormat()
+  noautocmd write
+  set nomodified
+endfunction
+
+augroup bufwrite_cs
+  autocmd!
+  autocmd BufWritePre *.cs call OmniSharp#actions#format#Format(function('s:CBCodeFormat'))
+augroup END
 
 " Time logging
 let s:timelog = '~/time/2023.timedot'
@@ -163,3 +186,9 @@ endif
 
 source ~/.vim/coc-mappings.vim
 source ~/.vim/kitty.vim
+
+" Source local project settings if available
+if filereadable('./saeid/project.vim')
+  source ./saeid/project.vim
+endif
+
