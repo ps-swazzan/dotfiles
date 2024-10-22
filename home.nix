@@ -33,7 +33,7 @@
     jq
     k9s
     mdcat
-    # mycli
+    mycli
     nodejs
     pandoc
     ripgrep
