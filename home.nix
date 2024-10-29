@@ -89,6 +89,8 @@
 
   programs.vim = {
     enable = true;
+    packageConfigurable = pkgs.vim-darwin;
+
     defaultEditor = true;
     plugins = [
       pkgs.vimPlugins.catppuccin-vim
