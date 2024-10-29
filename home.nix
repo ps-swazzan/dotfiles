@@ -57,6 +57,11 @@
       source = ./vim/coc-mappings.vim;
       target = ".vim/coc-mappings.vim";
     };
+
+    kitty-conf = {
+      source = ./kitty/kitty.conf;
+      target = ".config/kitty/kitty.conf";
+    };
   };
 
   # Home Manager can also manage your environment variables through
