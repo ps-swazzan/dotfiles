@@ -97,6 +97,7 @@
       pkgs.vimPlugins.fzfWrapper
       pkgs.vimPlugins.coc-nvim
       pkgs.vimPlugins.coc-json
+      (pkgs.callPackage ./vim/omnisharp-vim.nix { })
     ];
 
     extraConfig = builtins.readFile ./vim/vimrc;
