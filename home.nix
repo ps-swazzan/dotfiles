@@ -97,6 +97,7 @@
       pkgs.vimPlugins.fzfWrapper
       pkgs.vimPlugins.coc-nvim
       pkgs.vimPlugins.coc-json
+      pkgs.vimPlugins.copilot-vim
       (pkgs.callPackage ./vim/omnisharp-vim.nix { })
     ];
 
