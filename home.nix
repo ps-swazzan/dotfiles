@@ -43,6 +43,7 @@
     tree
     vault
     visidata
+    _1password-cli
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -98,6 +99,7 @@
       pkgs.vimPlugins.coc-nvim
       pkgs.vimPlugins.coc-json
       pkgs.vimPlugins.copilot-vim
+      pkgs.vimPlugins.vimspector
       (pkgs.callPackage ./vim/omnisharp-vim.nix { })
     ];
 
