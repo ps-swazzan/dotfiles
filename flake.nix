@@ -31,9 +31,28 @@
           }
         ];
       };
+      "Saeids-MacBook-Pro" = darwin.lib.darwinSystem rec {
+        system = "aarch64-darwin";
+
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
+
+        modules = [
+          ./m1-macbook-pro.nix
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "backup";
+            home-manager.users.swazzan = import ./home.nix;
+          }
+        ];
+      };
     };
 
     # Expose the package set, including overlays, for convenience.
-    darwinPackages = self.darwinConfigurations."C02ZF1G6LVDQ".pkgs;
+    darwinPackages = self.darwinConfigurations."Saeids-MacBook-Pro".pkgs;
   };
 }
