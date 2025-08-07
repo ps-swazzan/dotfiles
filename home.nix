@@ -82,7 +82,7 @@
   #  /etc/profiles/per-user/saeidw/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "vim";
+    EDITOR = "vim";
   };
 
   # Let Home Manager install and manage itself.
