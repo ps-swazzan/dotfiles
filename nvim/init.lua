@@ -2,8 +2,8 @@ vim.g.mapleader = ','
 vim.keymap.set({ 'n' }, '<Leader>ev', ':50vsplit $MYVIMRC<CR>')
 vim.keymap.set({ 'n' }, '<Leader>sv', ':source $MYVIMRC<CR>')
 
-vim.o.backupdir = "$XDG_STATE_HOME/nvim/backup,."
-vim.o.directory = "$XDG_STATE_HOME/nvim/swap,."
+vim.o.backupdir = vim.fn.stdpath("state") .. "/backup,."
+vim.o.directory = vim.fn.stdpath("state") .. "/swap,."
 
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
